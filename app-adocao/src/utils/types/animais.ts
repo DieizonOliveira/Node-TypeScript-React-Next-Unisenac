@@ -4,6 +4,7 @@ export interface AnimalI {
 id: number
 nome: string
 idade: number
+sexo: string
 destaque: boolean
 foto: string     
 descricao: string

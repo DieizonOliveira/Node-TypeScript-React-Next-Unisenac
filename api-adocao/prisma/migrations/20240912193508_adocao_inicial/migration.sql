@@ -11,12 +11,13 @@ CREATE TABLE `animais` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(60) NOT NULL,
     `idade` INTEGER NOT NULL,
+    `sexo` ENUM('Macho', 'Femea') NOT NULL,
     `destaque` BOOLEAN NOT NULL DEFAULT true,
     `foto` VARCHAR(191) NOT NULL,
     `descricao` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
-    `porte` ENUM('PEQUENO', 'MEDIO', 'GRANDE') NOT NULL DEFAULT 'MEDIO',
+    `porte` ENUM('Pequeno', 'Medio', 'Grande') NOT NULL DEFAULT 'Medio',
     `especieId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)

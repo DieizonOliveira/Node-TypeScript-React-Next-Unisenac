@@ -17,11 +17,11 @@ export function InputPesquisa({setAnimais}: InputPesquisaProps){
 
     async function enviaPesquisa(data: Inputs) {
 
-        if (data.termo.length < 2 ){
-            toast.warning("Digite, no mínimo, dois caracteres para pesquisa!")
-            reset({termo: ""})
-            return
-        }
+        // if (data.termo.length < 2 ){
+        //     toast.warning("Digite, no mínimo, dois caracteres para pesquisa!")
+        //     reset({termo: ""})
+        //     return
+        // }
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/animais/pesquisa/${data.termo}`)
         const dados = await response.json()

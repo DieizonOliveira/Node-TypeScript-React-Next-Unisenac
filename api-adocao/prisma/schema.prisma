@@ -26,19 +26,25 @@ model Animal {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(60)
   idade     Int
+  sexo      Sexos
   destaque  Boolean  @default(true)
   foto      String 
   descricao String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  porte     Portes   @default(MEDIO)
+  porte     Portes   @default(Medio)
   especie   Especie  @relation(fields: [especieId], references: [id])
   especieId Int
   @@map("animais")
 }
 
 enum Portes{
-  PEQUENO
-  MEDIO 
-  GRANDE
+  Pequeno
+  Medio 
+  Grande
+}
+
+enum Sexos{
+  Macho
+  Femea
 }
