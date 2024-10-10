@@ -33,8 +33,8 @@ const router = Router()
 
 router.get("/", async (req, res) => {
   try {
-    const maes = await prisma.especie.findMany()
-    res.status(200).json(maes)
+    const especies = await prisma.especie.findMany()
+    res.status(200).json(especies)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -49,10 +49,10 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const especie = await prisma.especie.create({
+    const especies = await prisma.especie.create({
       data: { nome }
     })
-    res.status(201).json(especie)
+    res.status(201).json(especies)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -62,10 +62,10 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params
 
   try {
-    const especie = await prisma.especie.delete({
+    const especies = await prisma.especie.delete({
       where: { id: Number(id) }
     })
-    res.status(200).json(especie)
+    res.status(200).json(especies)
   } catch (error) {
     res.status(400).json(error)
   }

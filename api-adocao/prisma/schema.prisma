@@ -35,7 +35,17 @@ model Animal {
   porte     Portes   @default(Medio)
   especie   Especie  @relation(fields: [especieId], references: [id])
   especieId Int
+  fotos     Foto[]
   @@map("animais")
+}
+
+model Foto{
+  id          Int    @id @default(autoincrement())
+  descricao   String @db.VarChar(30)
+  codigoFoto  String @db.LongText
+  animal      Animal @relation(fields: [animalId], references: [id])
+  animalId    Int
+  @@map("fotos")
 }
 
 enum Portes{

@@ -77,21 +77,35 @@ router.get("/pesquisa/:termo", async (req, res) => {
   // Se a conversao gerou um NaN (Nota a Number)
   if (isNaN(termoNumero)){
     try {
+      let termoCorrigido: string | undefined;
+
+      // Verifica se o termo é "macho" ou "fêmea" (em qualquer formato)
+      if (termo.toLowerCase() === 'macho') {
+          termoCorrigido = 'Macho';
+      } else if (termo.toLowerCase() === 'femea' || termo.toLowerCase() === 'fêmea') {
+          termoCorrigido = 'Femea';
+      } else {
+          termoCorrigido = undefined;
+      }
+
       const animais = await prisma.animal.findMany({
-        include: {
-          especie: true, 
-        },
-        where: {
-          OR: [
-            { nome: { contains: termo}},
-            { especie: {nome: {contains: termo}}}
-          ]
-        }
-      })
-      res.status(200).json(animais)
-    } catch (error) {
-      res.status(400).json(error)
-    }
+          include: {
+              especie: true,
+          },
+          where: {
+              OR: [
+                  { nome: { contains: termo } },
+                  { especie: { nome: { contains: termo } } },
+                  // Se o termo for "Macho" ou "Femea", faz a busca por sexo
+                  ...(termoCorrigido ? [{ sexo: termoCorrigido as 'Macho' | 'Femea' }] : [])
+              ]
+          }
+      });
+
+      res.status(200).json(animais);
+  } catch (error) {
+      res.status(400).json(error);
+  }
     
   }else{
     try {
