@@ -1,6 +1,18 @@
+"use client"
 import Link from "next/link";
+import { useAdotanteStore } from "@/context/adotante";
+import { useRouter } from "next/navigation";
 
 export function Header(){
+    const { adotante, deslogaAdotante } = useAdotanteStore()
+    const router = useRouter()
+
+    function sairAdotante(){
+        deslogaAdotante()
+        router.push("/login")
+    }
+
+
     return(
         <nav className="bg-gray-400 border-gray-200 dark:bg-gray-900">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
@@ -10,10 +22,30 @@ export function Header(){
                 .com</span></h1>
             </Link>
             <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                <span className="  text-black dark:text-white hover:underline">
+                
+            {adotante.id ?               
+                 <>
+                 <span className="  text-black dark:text-white hover:underline">
+                     {adotante.nome}</span>
+                     
+                 <span  className=" cursor-pointer font-bold  text-blue-600 dark:text-blue-500 hover:underline"
+                     onClick={sairAdotante}>
+                     Sair
+                 </span>
+                 </>
+
+                :
+
+                 <>
+                 <span className="  text-black dark:text-white hover:underline">
                     Identifique-se</span>
-                <Link href="/login" className="font-bold  text-blue-600 dark:text-blue-500 hover:underline">
-                    Entrar</Link>
+                     
+                 <Link href="/login" className="font-bold  text-blue-600 dark:text-blue-500 hover:underline">
+                     Entrar</Link>
+                 </>
+
+
+}
             </div>
         </div>
     </nav>  

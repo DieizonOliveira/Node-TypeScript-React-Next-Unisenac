@@ -4,13 +4,30 @@ import { ItemAnimais } from "@/components/ItemAnimais";
 import { AnimalI } from "@/utils/types/animais";
 import { useEffect, useState } from "react";
 import { Toaster } from 'sonner';
+import { useAdotanteStore } from "@/context/adotante";
 
 
 
 export default function Home() {
   const [animais, setAnimais] = useState<AnimalI[]>([])
+  const { logaAdotante } = useAdotanteStore()
 
   useEffect(() => {
+    
+    async function buscaAdotante(idAdotante: string) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/adotantes/${idAdotante}`)
+      if (response.status == 200){
+        const dados = await response.json()
+        logaAdotante(dados)
+      } 
+    }
+
+    if(localStorage.getItem("client_key")){
+      const idAdotanteLocal = localStorage.getItem("client_key") as string
+      buscaAdotante(idAdotanteLocal)
+    }
+
+
     async function buscaDados() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/animais`)
       const dados = await response.json()

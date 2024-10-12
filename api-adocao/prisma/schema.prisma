@@ -48,6 +48,23 @@ model Foto{
   @@map("fotos")
 }
 
+
+  //Token usado no id para manter logado nas requisicoes, garante mais seguranca quando for armazenado
+  //no local storage, pode ser usado fora do id, geralmente é e pode mudar ou experar no tempo estipulado
+  //podendo assim ter um campo id sequencial e usando o token em outro item abaixo.
+model Adotante {
+
+  id           String   @db.VarChar(36) @id @default(uuid()) 
+  nome         String   @db.VarChar(60)
+  fone         String   @db.VarChar(60)
+  endereco     String   @db.VarChar(180)
+  email        String   @db.VarChar(60) @unique
+  senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt  
+  @@map("adotantes")
+}
+
 enum Portes{
   Pequeno
   Medio 
