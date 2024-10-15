@@ -9,6 +9,11 @@ export function Header(){
 
     function sairAdotante(){
         deslogaAdotante()
+        //remove do localStorage o id do cliente locado (se ele indicou salvar no login)
+        if(localStorage.getItem("client_key")){
+         localStorage.removeItem("client_key")
+        }
+        
         router.push("/login")
     }
 

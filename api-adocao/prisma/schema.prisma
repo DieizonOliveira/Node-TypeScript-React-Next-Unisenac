@@ -36,6 +36,7 @@ model Animal {
   especie   Especie  @relation(fields: [especieId], references: [id])
   especieId Int
   fotos     Foto[]
+  pedidos   Pedido[]
   @@map("animais")
 }
 
@@ -61,8 +62,22 @@ model Adotante {
   email        String   @db.VarChar(60) @unique
   senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
   createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt  
+  updatedAt    DateTime @updatedAt
+  pedidos      Pedido[]
   @@map("adotantes")
+}
+
+model Pedido{
+  id          Int       @id @default(autoincrement())
+  adotante    Adotante  @relation(fields: [adotanteId], references: [id])
+  adotanteId  String    @db.VarChar(36)
+  animal      Animal    @relation(fields: [animalId], references: [id])
+  animalId    Int
+  descricao   String    @db.VarChar(300)
+  resposta    String?    @db.VarChar(300)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt  
+  @@map("pedidos")
 }
 
 enum Portes{

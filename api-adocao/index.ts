@@ -4,6 +4,7 @@ import especiesRoutes from './routes/especies'
 import animaisRoutes from './routes/animais'
 import fotosRoutes from './routes/fotos'
 import adotatesRoutes from './routes/adotantes'
+import pedidosRoutes from './routes/pedidos'
 
 const app = express()
 const port = 3004
@@ -15,7 +16,7 @@ app.use("/especies", especiesRoutes)
 app.use("/animais", animaisRoutes)
 app.use("/fotos", fotosRoutes)
 app.use("/adotantes", adotatesRoutes)
-
+app.use("/pedidos", pedidosRoutes)
 
 
 app.get('/', (req, res) => {
