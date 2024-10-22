@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaw, faRuler, faInfoCircle  } from '@fortawesome/free-solid-svg-icons';
 import { CakeIcon } from '@heroicons/react/24/outline';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
-// import { faRuler } from '@fortawesome/free-solid-svg-icons';
+
 
 // Função para escolher o ícone de sexo
-const getSexoIcon = (sexo) => {
+export const iconeSexo = (sexo: string) => {
   switch (sexo) {
     case 'Macho':
       return <FontAwesomeIcon icon={faMars} className="w-5 h-5 mr-2 text-blue-500" />;
@@ -47,7 +47,7 @@ export function ItemAnimais({ data }: { data: AnimalI }) {
                 </p>
 
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 flex items-center">
-                    {getSexoIcon(data.sexo)}
+                    {iconeSexo(data.sexo)}
                     <span>{data.sexo}</span>
                 </p>
 

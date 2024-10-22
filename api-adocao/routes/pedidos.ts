@@ -102,4 +102,20 @@ router.patch("/:id", async (req, res) => {
   }
 })
 
+router.get("/", async (req, res) => {
+  try {
+    const { adotanteId } = req.query; // Obtém o adotanteId da query string
+    const pedidos = await prisma.pedido.findMany({
+      where: {
+        adotanteId: adotanteId ? String(adotanteId) : undefined // Filtra os pedidos pelo adotanteId
+      },
+      include: { adotante: true, animal: true }
+    });
+    res.status(200).json(pedidos);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+
 export default router
