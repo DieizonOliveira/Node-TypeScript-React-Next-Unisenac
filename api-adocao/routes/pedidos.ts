@@ -6,18 +6,18 @@ import nodemailer from "nodemailer";
 const prisma = new PrismaClient()
 const router = Router()
 
-router.get("/", async (req, res) => {
-  try {
-    const pedidos = await prisma.pedido.findMany(
-      {
-        include: { adotante: true, animal: true}
-      }
-    )
-    res.status(200).json(pedidos)
-  } catch (error) {
-    res.status(400).json(error)
-  }
-})
+// router.get("/", async (req, res) => {
+//   try {
+//     const pedidos = await prisma.pedido.findMany(
+//       {
+//         include: { adotante: true, animal: true}
+//       }
+//     )
+//     res.status(200).json(pedidos)
+//   } catch (error) {
+//     res.status(400).json(error)
+//   }
+// })
 
 
 
@@ -116,6 +116,19 @@ router.get("/", async (req, res) => {
     res.status(400).json(error);
   }
 });
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const pedido = await prisma.pedido.delete({
+      where: { id: Number(id) }
+    })
+    res.status(200).json(pedido)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
 
 
 export default router

@@ -13,7 +13,7 @@ export default function Login() {
     const { register, handleSubmit } = useForm<Inputs>();
     const { logaAdotante } = useAdotanteStore();
     const router = useRouter();
-    
+
     async function verificaLogin(data: Inputs) {
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/adotantes/login`, {
             headers: {
@@ -22,18 +22,18 @@ export default function Login() {
             method: "POST",
             body: JSON.stringify({ email: data.email, senha: data.senha })
         });
-        
+
         if (response.status === 200) {
             const dados = await response.json();
             logaAdotante(dados); // Armazena no contexto
-            
+
             // Lógica para manter o usuário logado
             if (data.manter) {
                 localStorage.setItem("adotante", JSON.stringify(dados)); // Armazena o adotante completo
             } else {
                 localStorage.removeItem("adotante");
             }
-            
+
             router.push("/"); // Redireciona para a página principal
         } else {
             alert("Erro... Login ou Senha incorretos");
@@ -89,7 +89,10 @@ export default function Login() {
                                         <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Lembrar meus dados</label>
                                     </div>
                                 </div>
-                                <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Esqueci minha senha</a>
+                                <a href="/trocaSenha" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                    Esqueci minha senha
+                                </a>
+
                             </div>
                             <button type="submit" className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                 Entrar

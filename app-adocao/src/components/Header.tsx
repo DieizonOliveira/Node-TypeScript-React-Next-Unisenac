@@ -42,7 +42,7 @@ export function Header() {
                         :
                         <>
                             <Link href="/cadastro" className="text-black dark:text-white hover:underline">
-                                <span className="cursor-pointer font-bold">Identifique-se</span>
+                                <span className="cursor-pointer font-bold">Cadastre-se</span>
                             </Link>
                             <Link href="/login" className="font-bold text-blue-600 dark:text-blue-500 hover:underline">
                                 Entrar

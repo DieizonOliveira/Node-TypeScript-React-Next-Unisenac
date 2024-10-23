@@ -61,6 +61,7 @@ model Adotante {
   endereco     String   @db.VarChar(180)
   email        String   @db.VarChar(60) @unique
   senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
+  recoveryCode String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   pedidos      Pedido[]
