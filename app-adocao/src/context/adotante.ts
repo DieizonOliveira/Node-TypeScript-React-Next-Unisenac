@@ -8,18 +8,27 @@ type AdotanteStore = {
 };
 
 export const useAdotanteStore = create<AdotanteStore>((set) => {
-    const storedAdotante = localStorage.getItem("adotante");
-    const adotanteInicial = storedAdotante ? JSON.parse(storedAdotante) : {};
+    let adotanteInicial: AdotanteI = {} as AdotanteI;
+
+    // Verifica se está no ambiente do navegador
+    if (typeof window !== "undefined") {
+        const storedAdotante = localStorage.getItem("adotante");
+        adotanteInicial = storedAdotante ? JSON.parse(storedAdotante) : {} as AdotanteI;
+    }
 
     return {
         adotante: adotanteInicial, // Inicializa com o adotante armazenado
         logaAdotante: (adotanteLogado) => {
             set({ adotante: adotanteLogado });
-            localStorage.setItem("adotante", JSON.stringify(adotanteLogado)); // Armazena no local storage
+            if (typeof window !== "undefined") {
+                localStorage.setItem("adotante", JSON.stringify(adotanteLogado)); // Armazena no local storage
+            }
         },
         deslogaAdotante: () => {
             set({ adotante: {} as AdotanteI });
-            localStorage.removeItem("adotante"); // Remove do local storage ao deslogar
+            if (typeof window !== "undefined") {
+                localStorage.removeItem("adotante"); // Remove do local storage ao deslogar
+            }
         },
     };
 });

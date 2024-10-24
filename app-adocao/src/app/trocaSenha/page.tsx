@@ -1,7 +1,9 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function TrocaSenha() {
+  const router = useRouter(); // Inicializando o router
   const [email, setEmail] = useState("");
   const [codigoRecuperacao, setCodigoRecuperacao] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
@@ -60,7 +62,10 @@ export default function TrocaSenha() {
       const data = await response.json();
       if (response.ok) {
         setMensagem("Senha alterada com sucesso.");
-        // Redirecionar ou limpar os campos, se necessário
+        // Adicionando uma pausa de 2 segundos antes do redirecionamento
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000); // 2000 milissegundos = 2 segundos
       } else {
         setMensagem(data.erro || "Erro ao alterar senha.");
       }
@@ -71,9 +76,15 @@ export default function TrocaSenha() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Troca de Senha</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200  dark:bg-gray-900">
+      <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <a className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="./duvida.png" className="h-40" alt="Logo" />
+                </a>
+      
+      
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md  dark:bg-gray-800 dark:border-gray-700">
+        <h2 className="text-2xl font-bold mb-6 text-center  text-gray-900 md:text-2xl dark:text-white">Esqueceu sua senha?</h2>
         {!codigoEnviado ? (
           <>
             <input
@@ -126,6 +137,7 @@ export default function TrocaSenha() {
             {mensagem}
           </p>
         )}
+      </div>
       </div>
     </div>
   );

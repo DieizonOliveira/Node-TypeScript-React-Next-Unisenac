@@ -41,7 +41,7 @@ export default function Login() {
     }
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section className="bg-gray-200 dark:bg-gray-900">
             <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="./logo2.png" className="h-40" alt="Logo" />
@@ -89,7 +89,7 @@ export default function Login() {
                                         <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Lembrar meus dados</label>
                                     </div>
                                 </div>
-                                <a href="/trocaSenha" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                <a href="/trocaSenha" className="text-sm font-medium text-gray-500 hover:underline dark:text-primary-500">
                                     Esqueci minha senha
                                 </a>
 
@@ -98,7 +98,7 @@ export default function Login() {
                                 Entrar
                             </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Não tem cadastro? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se aqui</a>
+                                Não tem cadastro? <a href="/cadastro" className="font-medium text-primary-600 hover:underline dark:text-primary-500  text-gray-500  dark:text-white">Cadastre-se aqui</a>
                             </p>
                         </form>
                     </div>

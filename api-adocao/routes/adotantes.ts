@@ -229,4 +229,17 @@ router.post("/senha/trocar", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const adotante = await prisma.adotante.delete({
+      where: { id: String(id) }
+    })
+    res.status(200).json(adotante)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
 export default router;
