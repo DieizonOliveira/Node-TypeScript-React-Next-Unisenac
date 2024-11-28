@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { Router } from "express"
+import { verificaToken } from "../middlewares/verificaToken"
 
 const prisma = new PrismaClient()
 const router = Router()
@@ -17,54 +18,54 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
-  const { nome, idade, sexo, foto, descricao, porte, especieId } = req.body
+router.post("/", verificaToken, async (req, res) => {
+  const { nome, idade, sexo, foto, descricao, porte, especieId } = req.body;
 
-  if (!nome || !idade ||!sexo || !foto || !porte || !especieId) {
-    res.status(400).json({ "erro": "Informe nome, sexo, idade, porte e especieId" })
-    return
+  if (!nome || !idade || !sexo || !foto || !porte || !especieId) {
+    res.status(400).json({ erro: "Informe nome, sexo, idade, porte e especieId" });
+    return;
   }
 
   try {
     const animal = await prisma.animal.create({
-      data: { nome, idade, sexo, foto, descricao, porte, especieId }
-    })
-    res.status(201).json(animal)
+      data: { nome, idade, sexo, foto, descricao, porte, especieId },
+    });
+    res.status(201).json(animal);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
 })
 
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params
+router.delete("/:id", verificaToken, async (req, res) => {
+  const { id } = req.params;
 
   try {
     const animal = await prisma.animal.delete({
-      where: { id: Number(id) }
-    })
-    res.status(200).json(animal)
+      where: { id: Number(id) },
+    });
+    res.status(200).json(animal);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
 })
 
-router.put("/:id", async (req, res) => {
-  const { id } = req.params
-  const { nome, idade, sexo, foto, descricao, porte, especieId } = req.body
+router.put("/:id", verificaToken, async (req, res) => {
+  const { id } = req.params;
+  const { nome, idade, sexo, foto, descricao, porte, especieId } = req.body;
 
   if (!nome || !idade || !sexo || !foto || !porte || !especieId) {
-    res.status(400).json({ "erro": "Informe nome, idade, porte e especieId" })
-    return
+    res.status(400).json({ erro: "Informe nome, idade, porte e especieId" });
+    return;
   }
 
   try {
     const animal = await prisma.animal.update({
       where: { id: Number(id) },
-      data: { nome, idade, sexo, foto, descricao, porte, especieId }
-    })
-    res.status(200).json(animal)
+      data: { nome, idade, sexo, foto, descricao, porte, especieId },
+    });
+    res.status(200).json(animal);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
 })
 

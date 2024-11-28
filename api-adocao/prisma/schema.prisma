@@ -21,7 +21,6 @@ model Especie {
 }
 
 
-
 model Animal {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(60)
@@ -35,6 +34,8 @@ model Animal {
   porte     Portes   @default(Medio)
   especie   Especie  @relation(fields: [especieId], references: [id])
   especieId Int
+  admin     Admin        @relation(fields: [adminId], references: [id])
+  adminId   Int          @default(1)
   fotos     Foto[]
   pedidos   Pedido[]
   @@map("animais")
@@ -79,6 +80,17 @@ model Pedido{
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt  
   @@map("pedidos")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  nome         String   @db.VarChar(60)
+  email        String   @db.VarChar(60) @unique
+  senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt  
+  animais      Animal[]
+  @@map("admins")
 }
 
 enum Portes{

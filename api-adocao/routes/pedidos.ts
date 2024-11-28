@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { Router } from "express"
 import nodemailer from "nodemailer";
+import { verificaToken } from "../middlewares/verificaToken";
 
 
 const prisma = new PrismaClient()
@@ -70,7 +71,7 @@ const info = await transporter.sendMail({
 // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
 }
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", verificaToken, async (req, res) => {
   const { id } = req.params
   const { resposta } = req.body
 
@@ -86,15 +87,17 @@ router.patch("/:id", async (req, res) => {
     })
 
     const dados = await prisma.pedido.findUnique({
-      where: {id: Number(id)},
+      where: { id: Number(id) },
       include: {
         adotante: true 
       }
     })
- enviaEmail(dados?.adotante.nome as string,
-            dados?.adotante.email as string, 
-            dados?.descricao as string,
-            resposta)
+    
+    // Envia o e-mail com os dados atualizados
+    enviaEmail(dados?.adotante.nome as string,
+               dados?.adotante.email as string, 
+               dados?.descricao as string,
+               resposta)
 
     res.status(200).json(pedido)
   } catch (error) {
