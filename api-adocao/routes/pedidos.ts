@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { Router } from "express"
 import nodemailer from "nodemailer";
-import { verificaToken } from "../middlewares/verificaToken";
+import { verificaToken } from "../middewares/verificaToken";
 
 
 const prisma = new PrismaClient()
@@ -112,13 +112,15 @@ router.get("/", async (req, res) => {
       where: {
         adotanteId: adotanteId ? String(adotanteId) : undefined // Filtra os pedidos pelo adotanteId
       },
-      include: { adotante: true, animal: true }
+      include: { adotante: true, animal:{ include:{especie: true}} }
     });
     res.status(200).json(pedidos);
   } catch (error) {
     res.status(400).json(error);
   }
 });
+
+
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params

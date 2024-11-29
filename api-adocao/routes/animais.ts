@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { Router } from "express"
-import { verificaToken } from "../middlewares/verificaToken"
+import { verificaToken } from "../middewares/verificaToken"
 
 const prisma = new PrismaClient()
 const router = Router()
@@ -11,6 +11,8 @@ router.get("/", async (req, res) => {
       include: {
         especie: true 
       }
+
+    
     })
     res.status(200).json(animais)
   } catch (error) {
